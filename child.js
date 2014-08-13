@@ -1,11 +1,15 @@
-var socket = require( "socket.io-client" )( "http://127.0.0.1:3000" );
+var io = require( "socket.io-client" );
 
-socket.connect();
+var command = io.connect( "http://127.0.0.1:3000/command" );
 
-socket.on( "connect", function onConnect( ){
-  console.log( "connected to server!" );
+
+command.on( "cli", function onCommand( command ){
+	console.log("@cli:"+command);
 } );
 
-  socket.on( "disconnect", function onDisconnect( ){
-    console.log( "You are disconnected from server." );
-  } );
+command.emit( "cli", "command" );
+
+command.on( "disconnect", function onDisconnect( ){
+	console.log( "You are disconnected from server." );
+} );
+

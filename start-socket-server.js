@@ -1,17 +1,21 @@
 var startSocketServer = function startSocketServer( host, port, channelSet, boundProxyServerURL ){
 
-	server.listen(port,host);
+	server.listen( port, host);
 
-	io.on( "connection", function onConnection( socket ){
-		socket.on( "command", function onCommand( command ){
-			console.log( "@cli:"+command );
+	var command = io
+	.of( "/command" )
+	.on( "connection",
+		function onConnect( socket ){
+			socket.on( "cli", function onCommand( command ){
+				console.log("@cli:"+command);
+			} );
+
+			command.emit( "cli", "command" );
 		} );
-	} );
-
 };
 
 var app = require( "express" )( );
-var server = require( "http" ).Server( app) ;
+var server = require( "http" ).Server( app );
 var io = require( "socket.io" )( server );
 
 exports.startSocketServer = startSocketServer;
