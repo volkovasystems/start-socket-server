@@ -1,24 +1,12 @@
 <html>
 	<head><title>Socket IO - sample</title>
-		
 		<script src="/socket.io/socket.io.js"></script>
 
 			<script>
-			var socket = io.connect( "http://localhost:8080" );
+			var socket = io.connect( "http://127.0.0.1:3000" );
 
-				 socket.on( "call", function onCall( message ){
-				    console.log( message );
-
-				    socket.emit( "callback", { message: "Hello parent" } );
-				  } );
-
-				  socket.on( "introduce", function onIntroduction( message ){
-				    console.log( message );
-
-				    var specsObject = { "uuid": "myUniqueID" };
-				    console.log( "I am ", specsObject.uuid );
-
-				    socket.emit( "introduction", { message: specsObject.uuid } );
+				 socket.on( "connect", function onConnect( ){
+				    console.log( "Connected" );
 				  } );
 
 				  socket.on( "disconnect", function onDisconnect( ){
@@ -26,6 +14,8 @@
 				  } );
 
 				</script>
+		
+		
 			</head>
 
 	
