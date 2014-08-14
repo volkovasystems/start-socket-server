@@ -1,6 +1,13 @@
 var startSocketServer = function startSocketServer( host, port, channelSet, boundProxyServerURL ){
 
-	server.listen( port, host);
+	server.listen( port, host );
+
+	app.use( app.router );
+
+	app.all('/*', function onAll( request, response, next ){
+		response.set( "X-Catch-All", "true" );
+		next(  "yow!" );
+	} );
 
 	var command = io
 	.of( "/command" )
@@ -12,6 +19,8 @@ var startSocketServer = function startSocketServer( host, port, channelSet, boun
 
 			command.emit( "cli", "command" );
 		} );
+
+
 };
 
 var app = require( "express" )( );
