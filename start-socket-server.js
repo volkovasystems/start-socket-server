@@ -2,19 +2,10 @@ var startSocketServer = function startSocketServer( host, port, channelSet, boun
 
 	server.listen( port, host );
 
-	app.use( app.router );
-
-	app.get("/command", function(request,response){
-		response.send ("/command path" );
-	} );		
-
-	app.all('/*', function onAll( request, response, next ){
-		response.set( "X-Catch-All", "true" );
-		next(  "yow!" );
-
+	app.use( function onUse( request, response, next ){
+		next("ok");
 	} );
 	
-
 	var command = io
 	.of( "/command" )
 	.on( "connection",
