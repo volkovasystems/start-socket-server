@@ -4,10 +4,16 @@ var startSocketServer = function startSocketServer( host, port, channelSet, boun
 
 	app.use( app.router );
 
+	app.get("/command", function(request,response){
+		response.send ("/command path" );
+	} );		
+
 	app.all('/*', function onAll( request, response, next ){
 		response.set( "X-Catch-All", "true" );
 		next(  "yow!" );
+
 	} );
+	
 
 	var command = io
 	.of( "/command" )
